@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import UserLogo from "../../assets/user.png";
 import { Image } from 'react-native';
+import { TextInput } from 'react-native';
+import OfferCard from '../components/OfferCard';
 
 const HomeScreen = ({navigation}) => {
     useEffect(()=> {
@@ -19,7 +21,8 @@ const HomeScreen = ({navigation}) => {
             <MaterialIcons name="menu" size={24} color={"#fff"} />
           </View>
        
-            <Pressable className="flex-row items-center justify-center border border-slate-400 rounded-full ">
+       <View>
+       <Pressable className="flex-row items-center justify-center border border-slate-400 rounded-full ">
               <Image
                 source={UserLogo}
                 className="h-12 w-12"
@@ -32,8 +35,30 @@ const HomeScreen = ({navigation}) => {
                 />
                 <Text className="font-semibold py-2 pr-4 pl-2">Login</Text>
             </Pressable>
+       </View>
+       </View>
+
+             {/* search input*/}
+           <View className="mt-6 px-5">
+            <Text className="font-bold text-2xl">Welcome, User</Text>
+            <Text className="font-bold text-xl text-gray-500">Our Fasion App</Text>
         </View>
 
+        <View className="mt-6 px-5">
+            <View className="flex-row bg-gray-200 p-2 px-3 items-center rounded-3xl">
+                <View>
+            <MaterialIcons name="search" size={24} color={"#111"} />
+                </View>
+                <TextInput placeholder='Search...' 
+                placeholderTextColor={"#666666"}
+                className="px-2"
+                />
+            </View>
+        </View>
+
+        <View className="mt-6 p-5">
+            <OfferCard />
+        </View>
     </SafeAreaView>
   )
 }
