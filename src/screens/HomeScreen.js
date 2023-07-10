@@ -1,13 +1,16 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { Pressable, StyleSheet, Text, View,Image,ScrollView, TextInput} from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import UserLogo from "../../assets/user.png";
-import { Image } from 'react-native';
-import { TextInput } from 'react-native';
 import OfferCard from '../components/OfferCard';
 
+import NewArrivalCard from '../components/NewArrivalCard';
+import AuthenticationModal from '../components/AuthenticationModal';
+
 const HomeScreen = ({navigation}) => {
+  const [modalVisible, setModalVisibile] = useState(false);
+
     useEffect(()=> {
         navigation.setOptions({
             headerShown:false
@@ -16,22 +19,17 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
+       <ScrollView>
        <View className="flex-row px-5 mt-6 justify-between items-center">
           <View className="bg-black rounded-full w-10 h-10 justify-center items-center">
             <MaterialIcons name="menu" size={24} color={"#fff"} />
           </View>
        
        <View>
-       <Pressable className="flex-row items-center justify-center border border-slate-400 rounded-full ">
+       <Pressable onPress={() => setModalVisibile(!modalVisible)} className="flex-row items-center justify-center border border-slate-400 rounded-full ">
               <Image
                 source={UserLogo}
                 className="h-12 w-12"
-                // style={{
-                //   height: 40,
-                //   width: 40,
-                //   backgroundColor: "#aaaaaa",
-                //   borderRadius: 50,
-                // }}
                 />
                 <Text className="font-semibold py-2 pr-4 pl-2">Login</Text>
             </Pressable>
@@ -59,6 +57,51 @@ const HomeScreen = ({navigation}) => {
         <View className="mt-6 p-5">
             <OfferCard />
         </View>
+
+        <View className="mt-4">
+          <View className="flex-row justify-between items-center px-5">
+            <Text className="text-lg font-extrabold">New Arrivals</Text>
+            <Pressable>
+              <Text className="text-xs text-graay-500"> View ALL</Text>
+            </Pressable>
+          </View>
+          <ScrollView className="mt-4 ml-5"
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          >
+            <Pressable>
+            <NewArrivalCard/>
+            </Pressable>
+
+            <Pressable>
+            <NewArrivalCard/>
+            </Pressable>
+
+            <Pressable>
+            <NewArrivalCard/>
+            </Pressable>
+
+            <Pressable>
+            <NewArrivalCard/>
+            </Pressable>
+
+            <Pressable>
+            <NewArrivalCard/>
+            </Pressable>
+
+            <Pressable>
+            <NewArrivalCard/>
+            </Pressable>
+          </ScrollView>
+        </View>
+
+        <View>
+          <AuthenticationModal
+          modalVisible={modalVisible}
+          setModalVisibile={setModalVisibile}
+          />
+        </View>
+       </ScrollView>
     </SafeAreaView>
   )
 }
