@@ -1,21 +1,23 @@
 import { Pressable, StyleSheet, Text, View,Image,ScrollView, TextInput} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import UserLogo from "../../assets/user.png";
 import OfferCard from '../components/OfferCard';
-
 import NewArrivalCard from '../components/NewArrivalCard';
 import AuthenticationModal from '../components/AuthenticationModal';
+import AuthContext from "../features/context/authContext"
 
 const HomeScreen = ({navigation}) => {
-  const [modalVisible, setModalVisibile] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const {isLoggedIn, currentUser} = useContext(AuthContext)
 
     useEffect(()=> {
         navigation.setOptions({
             headerShown:false
         })
     }, [])
+    console.log(currentUser?.name)
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -25,20 +27,22 @@ const HomeScreen = ({navigation}) => {
             <MaterialIcons name="menu" size={24} color={"#fff"} />
           </View>
        
-       <View>
-       <Pressable onPress={() => setModalVisibile(!modalVisible)} className="flex-row items-center justify-center border border-slate-400 rounded-full ">
+       {isLoggedIn && <View>
+       <Pressable onPress={() => setModalVisible(!modalVisible)} className="flex-row items-center justify-center border border-slate-400 rounded-full ">
               <Image
                 source={UserLogo}
                 className="h-12 w-12"
                 />
                 <Text className="font-semibold py-2 pr-4 pl-2">Login</Text>
             </Pressable>
-       </View>
+       </View>}
        </View>
 
              {/* search input*/}
            <View className="mt-6 px-5">
-            <Text className="font-bold text-2xl">Welcome, User</Text>
+            <Text className="font-bold text-2xl">Welcome, 
+ <Text className="font-bold text-slate-500">{currentUser?.name}</Text>
+            </Text>
             <Text className="font-bold text-xl text-gray-500">Our Fasion App</Text>
         </View>
 
@@ -98,7 +102,7 @@ const HomeScreen = ({navigation}) => {
         <View>
           <AuthenticationModal
           modalVisible={modalVisible}
-          setModalVisibile={setModalVisibile}
+          setModalVisibile={setModalVisible}
           />
         </View>
        </ScrollView>
